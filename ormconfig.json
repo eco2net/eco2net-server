@@ -1,0 +1,10 @@
+{
+    "type": "postgres",
+    "host": "127.0.0.1",
+    "port": 5432,
+    "username": "user",
+    "password": "password123",
+    "database": "postgres",
+    "entities": "[Users, Report, EtatLieux]",
+    "synchronize": true
+  }
