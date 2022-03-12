@@ -3,10 +3,23 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ReportModule } from './report/report.module';
 import { UsersModule } from './users/users.module';
+import { TypeOrmModule } from '@nestjs/typeorm'
+import { Users } from './users/entities/users.entity';
 
 @Module({
-  imports: [ReportModule, UsersModule],
+  imports: [ReportModule
+    , UsersModule,
+    TypeOrmModule.forRoot({
+      type: 'postgres',
+      host: '127.0.0.1',
+      port: 5432,
+      username: 'user',
+      password: 'password123',
+      database: 'postgres',
+      entities: [Users],
+      synchronize: true,
+    }),],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule { }
