@@ -1,4 +1,5 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
+import { InsertResult } from 'typeorm';
 import { ReportDto } from './dto/report.dto';
 import { Report } from './entities/report.entity';
 import { ReportService } from './report.service';
@@ -9,11 +10,11 @@ export class ReportController {
 
   @Get()
   getAllReports(): Promise<Report[]> {
-    return this.reportService.findAllReport();
+    return this.reportService.getAllReports();
   }
 
   @Post()
-  addReport(@Body() reportDto: ReportDto): Promise<Report> {
+  addReport(@Body() reportDto : ReportDto): Promise<InsertResult> {
     return this.reportService.addReport(reportDto);
   }
 }
