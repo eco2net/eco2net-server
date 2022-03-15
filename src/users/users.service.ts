@@ -8,17 +8,17 @@ import { Users } from './entities/users.entity';
 @Injectable()
 export class UsersService {
 
-  constructor(
-    @InjectRepository(Users) 
-    private userRepository : Repository<Users>
-  ) {}
+  // constructor(
+  //   @InjectRepository(Users) 
+  //   private userRepository : Repository<Users>
+  // ) {}
 
-  findAll(): Promise<Users[]> {
-    return this.userRepository.find();
-  }
+  // findAll(): Promise<Users[]> {
+  //   return this.userRepository.find();
+  // }
 
-  addUser(user: Users): Promise<InsertResult> {
-    return this.userRepository.insert(user);;
-  }
+  // addUser(user: Users): Promise<InsertResult> {
+  //   return this.userRepository.insert(user);;
+  // }
   
 }
