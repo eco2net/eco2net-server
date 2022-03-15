@@ -5,15 +5,15 @@ import { ReportService } from './report.service';
 
 @Controller('report')
 export class ReportController {
-  constructor(private readonly reportService: ReportService) {}
+  constructor(private readonly reportService: ReportService) { }
 
   @Get()
-  getAllReports(): Report[] {
-    return this.reportService.getAllService();
+  getAllReports(): Promise<Report[]> {
+    return this.reportService.findAllReport();
   }
 
   @Post()
-  addReport(@Body() reportDto : ReportDto): ReportDto {
+  addReport(@Body() reportDto: ReportDto): Promise<Report> {
     return this.reportService.addReport(reportDto);
   }
 }

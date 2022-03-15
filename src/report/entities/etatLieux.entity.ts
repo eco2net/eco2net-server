@@ -1,5 +1,5 @@
 export class etatLieux {
-    attachements: [];
+    attachements: any[];
     etatLieux: String;
     etatLieuxDesc: String
 }
