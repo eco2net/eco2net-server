@@ -2,14 +2,31 @@ import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { EtatLieux } from "./EtatLieux.entity";
 
 
+
 @Entity()
 export class Report {
+
+    constructor(
+        switchMembreConseil: Boolean,
+        switchCCR: Boolean,
+        switchAgentService: Boolean,
+        nameSite: String,
+        nameGuardian: String
+    ) {
+        this.switchMembreConseil = switchMembreConseil;
+        this.switchCCR = switchCCR;
+        this.switchAgentService = switchAgentService;
+        this.nameSite = nameSite;
+        this.nameGuardian = nameGuardian;
+    }
+
+
     @PrimaryGeneratedColumn()
-    id : number;
+    id: number;
 
     @Column()
     switchMembreConseil: Boolean;
-    
+
     @Column()
     switchCCR: Boolean;
 

@@ -1,11 +1,19 @@
-import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Report } from "./Report.entity";
 
 @Entity()
 export class EtatLieux {
 
+    constructor(
+        etatLieux: String, 
+        etatLieuxDesc : String
+        ) {
+            this.etatLieux = etatLieux;
+            this.etatLieuxDesc = etatLieuxDesc
+        }
+
     @PrimaryGeneratedColumn()
-    id: Number; 
+    id: number; 
 
     @Column()
     etatLieux: String;

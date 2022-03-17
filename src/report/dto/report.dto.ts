@@ -1,7 +1,10 @@
 import { IsArray, IsBoolean, IsNotEmpty, IsNumber, IsString } from "class-validator";
-import { etatLieux } from "../entities/etatLieux.entity";
+import { EtatLieux } from "../entities/etatLieux.entity";
 
 export class ReportDto {
+
+    @IsNumber()
+    id: number;
 
     @IsBoolean()
     @IsNotEmpty()
@@ -24,5 +27,5 @@ export class ReportDto {
     nameGuardian: String;
 
     @IsArray()
-    listetatLieux: etatLieux[]
+    listetatLieux: EtatLieux[]
 }
