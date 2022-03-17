@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
 import { InsertResult } from 'typeorm';
 import { ReportDto } from './dto/report.dto';
-import { Report } from './entities/report.entity';
+import { Report } from './entities/Report.entity';
 import { ReportService } from './report.service';
 
 @Controller('report')
@@ -15,6 +15,6 @@ export class ReportController {
 
   @Post()
   addReport(@Body() reportDto : ReportDto): Promise<InsertResult> {
-    return this.reportService.addReport(reportDto);
+    return this.reportService.addReport(reportDto)
   }
 }

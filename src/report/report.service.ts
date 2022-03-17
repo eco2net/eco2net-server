@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { InsertResult, Repository } from 'typeorm';
 import { ReportDto } from './dto/report.dto';
-import { Report } from './entities/report.entity';
+import { Report } from './entities/Report.entity';
 
 @Injectable()
 export class ReportService {
@@ -20,7 +20,7 @@ export class ReportService {
         return this.reportRepository.find();
     }
 
-    addReport(report: ReportDto): Promise<InsertResult> {
+    addReport(report): Promise<InsertResult> {
         return this.reportRepository.insert(report);
     }
 

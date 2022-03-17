@@ -5,7 +5,8 @@ import { ReportModule } from './report/report.module';
 // import { UsersModule } from './users/users.module';
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { Users } from './users/entities/users.entity';
-import { Report } from './report/entities/report.entity';
+import { Report } from './report/entities/Report.entity';
+import { EtatLieux } from './report/entities/EtatLieux.entity';
 
 @Module({
   imports: [ReportModule, 
@@ -17,9 +18,10 @@ import { Report } from './report/entities/report.entity';
       username: 'user',
       password: 'password123',
       database: 'postgres',
-      entities: [Users, Report],
+      entities: [Users, Report, EtatLieux],
       synchronize: true,
-    }),],
+    })
+  ],
   controllers: [AppController],
   providers: [AppService],
 })

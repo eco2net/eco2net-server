@@ -1,11 +1,11 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
-import { etatLieux } from "./etatLieux.entity";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { EtatLieux } from "./EtatLieux.entity";
 
 
 @Entity()
 export class Report {
     @PrimaryGeneratedColumn()
-    id : Number;
+    id : number;
 
     @Column()
     switchMembreConseil: Boolean;
@@ -22,6 +22,6 @@ export class Report {
     @Column()
     nameGuardian: String;
 
-    @Column(() => etatLieux)
-    listetatLieux: etatLieux[]
+    @OneToMany(() => EtatLieux, etatlieux => etatlieux.report)
+    listetatLieux: EtatLieux[]
 }
