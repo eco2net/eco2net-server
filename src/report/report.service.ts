@@ -5,6 +5,7 @@ import { ReportDto } from './dto/report.dto';
 import { EtatLieux } from './entities/EtatLieux.entity';
 import { Report } from './entities/Report.entity';
 const { forEach } = require('p-iteration');
+
 @Injectable()
 export class ReportService {
 
@@ -17,8 +18,10 @@ export class ReportService {
     ) { }
 
 
-    getAllReports(): Promise<Report[]> {
-        return this.reportRepository.find();
+    async getAllReports(): Promise<Report[]> {
+        let reports = await this.reportRepository.find({relations:["listetatLieux"]})
+        console.log(reports);
+        return reports;
     }
 
     async addReport(report: ReportDto): Promise<any> {
