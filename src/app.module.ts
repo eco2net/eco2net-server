@@ -2,15 +2,13 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ReportModule } from './report/report.module';
-// import { UsersModule } from './users/users.module';
 import { TypeOrmModule } from '@nestjs/typeorm'
-import { Users } from './users/entities/users.entity';
 import { Report } from './report/entities/Report.entity';
 import { EtatLieux } from './report/entities/EtatLieux.entity';
+import { PhotosModule } from './photos/photos.module';
 
 @Module({
-  imports: [ReportModule, 
-    // UsersModule,
+  imports: [ReportModule,
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: '127.0.0.1',
@@ -18,9 +16,10 @@ import { EtatLieux } from './report/entities/EtatLieux.entity';
       username: 'user',
       password: 'password123',
       database: 'postgres',
-      entities: [Users, Report, EtatLieux],
+      entities: [Report, EtatLieux],
       synchronize: true,
-    })
+    }),
+    PhotosModule
   ],
   controllers: [AppController],
   providers: [AppService],

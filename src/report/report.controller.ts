@@ -14,7 +14,8 @@ export class ReportController {
   }
 
   @Post()
-  addReport(@Body() reportDto : ReportDto): Promise<InsertResult> {
+  addReport(@Body() reportDto : any): any {
+    console.log(reportDto)
     return this.reportService.addReport(reportDto);
   }
 }
