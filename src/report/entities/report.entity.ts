@@ -1,4 +1,5 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Attachements } from "./attachement.entity";
 import { EtatLieux } from "./EtatLieux.entity";
 
 
@@ -41,4 +42,7 @@ export class Report {
 
     @OneToMany(() => EtatLieux, etatlieux => etatlieux.report)
     listetatLieux: EtatLieux[]
+
+    @OneToMany(() => Attachements, attachement => attachement.report)
+    attachements: Attachements[]
 }

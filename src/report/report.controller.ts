@@ -21,6 +21,6 @@ export class ReportController {
     console.log(files);
     console.log(JSON.parse(report.form))
     let reportDto = JSON.parse(report.form);
-    return this.reportService.addReport(reportDto);
+    return this.reportService.addReport(reportDto, files);
   }
 }

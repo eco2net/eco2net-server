@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { ReportDto } from './dto/report.dto';
+import { Attachements } from './entities/attachement.entity';
 import { EtatLieux } from './entities/EtatLieux.entity';
 import { Report } from './entities/Report.entity';
 const { forEach } = require('p-iteration');
@@ -14,28 +15,37 @@ export class ReportService {
         private reportRepository: Repository<Report>,
 
         @InjectRepository(EtatLieux)
-        private etatLieuxRepository: Repository<EtatLieux>
+        private etatLieuxRepository: Repository<EtatLieux>,
+
+        @InjectRepository(Attachements)
+        private attachementsEntity: Repository<Attachements>
     ) { }
     
     async getAllReports(): Promise<Report[]> {
-        let reports = await this.reportRepository.find({ relations: ["listetatLieux"] })
+        let reports = await this.reportRepository.find({ relations: ["listetatLieux", "attachements"] })
         console.log(reports);
         return reports;
     }
 
-    async addReport(report: ReportDto): Promise<any> {
+    async addReport(report: ReportDto, files): Promise<any> {
         let reportEnity = new Report(report.switchMembreConseil,
             report.switchCCR,
             report.switchAgentService,
             report.nameSite,
             report.nameGuardian
         );
-        const addReport = await this.reportRepository.insert(reportEnity);
+        await this.reportRepository.insert(reportEnity);
 
         forEach(report.listetatLieux, async (etat: EtatLieux) => {
             let etatLieuxEnity = new EtatLieux(etat.etatLieux, etat.etatLieuxDesc);
             etatLieuxEnity.report = reportEnity;
-            const addEtatReport = await this.etatLieuxRepository.insert(etatLieuxEnity)
+            await this.etatLieuxRepository.insert(etatLieuxEnity)
+        })
+
+        forEach(files, async (file : any) => {
+            let attachementsEntity = new Attachements(file.filename, file.originalname);
+            attachementsEntity.report = reportEnity;
+            await this.attachementsEntity.insert(attachementsEntity);
         })
     }
 }
