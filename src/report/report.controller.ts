@@ -1,4 +1,6 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, UploadedFiles, UseInterceptors } from '@nestjs/common';
+import { FilesInterceptor } from '@nestjs/platform-express';
+import { multerOptions } from 'src/config/Multer.config';
 import { InsertResult } from 'typeorm';
 import { ReportDto } from './dto/report.dto';
 import { Report } from './entities/Report.entity';
@@ -14,8 +16,11 @@ export class ReportController {
   }
 
   @Post()
-  addReport(@Body() reportDto : any): any {
-    console.log(reportDto)
+  @UseInterceptors(FilesInterceptor('files[]',100, multerOptions))
+  addReport(@UploadedFiles() files: Array<Express.Multer.File>, @Body() report): any {
+    console.log(files);
+    console.log(JSON.parse(report.form))
+    let reportDto = JSON.parse(report.form);
     return this.reportService.addReport(reportDto);
   }
 }
