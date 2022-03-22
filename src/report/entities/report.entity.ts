@@ -1,8 +1,6 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, Timestamp } from "typeorm";
 import { Attachements } from "./attachement.entity";
 import { EtatLieux } from "./EtatLieux.entity";
-
-
 
 @Entity()
 export class Report {
@@ -21,7 +19,6 @@ export class Report {
         this.nameGuardian = nameGuardian;
     }
 
-
     @PrimaryGeneratedColumn()
     id: number;
 
@@ -39,6 +36,12 @@ export class Report {
 
     @Column()
     nameGuardian: String;
+
+    @Column({default : 'User1'})
+    user: String;
+
+    @CreateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP(6)" })
+    createdAt: Date
 
     @OneToMany(() => EtatLieux, etatlieux => etatlieux.report)
     listetatLieux: EtatLieux[]

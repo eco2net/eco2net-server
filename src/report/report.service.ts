@@ -27,6 +27,11 @@ export class ReportService {
         return reports;
     }
 
+    async getReportById(id : number): Promise<Report> {
+        let report = await this.reportRepository.findOne(id, { relations: ["listetatLieux", "attachements"] });
+        return report;
+    }
+
     async addReport(report: ReportDto, files): Promise<any> {
         let reportEnity = new Report(report.switchMembreConseil,
             report.switchCCR,

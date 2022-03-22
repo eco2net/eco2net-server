@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, UploadedFiles, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, UploadedFiles, UseInterceptors } from '@nestjs/common';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { multerOptions } from 'src/config/Multer.config';
 import { InsertResult } from 'typeorm';
@@ -14,6 +14,12 @@ export class ReportController {
   getAllReports(): Promise<Report[]> {
     return this.reportService.getAllReports();
   }
+
+  @Get(":id")
+  getOneReport(@Param() param) : Promise<Report> {
+    return this.reportService.getReportById(param.id);
+  }
+
 
   @Post()
   @UseInterceptors(FilesInterceptor('files[]',100, multerOptions))
