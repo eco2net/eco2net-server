@@ -6,10 +6,12 @@ export class Attachements {
 
     constructor(
         name: String,
-        originalName: String
+        originalName: String,
+        path: String
     ) {
         this.name = name;
         this.originalName = originalName
+        this.path = path
     }
 
     @PrimaryGeneratedColumn()
@@ -20,6 +22,9 @@ export class Attachements {
 
     @Column()
     originalName: String;
+
+    @Column()
+    path: String;
 
     @ManyToOne(() => Report, report => report.attachements)
     report: Report

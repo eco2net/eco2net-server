@@ -29,10 +29,11 @@ export class ReportService {
 
     async getReportById(id : number): Promise<Report> {
         let report = await this.reportRepository.findOne(id, { relations: ["listetatLieux", "attachements"] });
-        return report;
+        return report
     }
 
     async addReport(report: ReportDto, files): Promise<any> {
+        console.log(files);
         let reportEnity = new Report(report.switchMembreConseil,
             report.switchCCR,
             report.switchAgentService,
@@ -48,7 +49,7 @@ export class ReportService {
         })
 
         forEach(files, async (file : any) => {
-            let attachementsEntity = new Attachements(file.filename, file.originalname);
+            let attachementsEntity = new Attachements(file.filename, file.originalname, file.path);
             attachementsEntity.report = reportEnity;
             await this.attachementsEntity.insert(attachementsEntity);
         })
