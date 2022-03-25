@@ -23,7 +23,6 @@ export class ReportService {
     
     async getAllReports(): Promise<Report[]> {
         let reports = await this.reportRepository.find({ relations: ["listetatLieux", "attachements"] })
-        console.log(reports);
         return reports;
     }
 
@@ -33,25 +32,24 @@ export class ReportService {
     }
 
     async addReport(report: ReportDto, files): Promise<any> {
-        console.log(files);
         let reportEnity = new Report(report.switchMembreConseil,
             report.switchCCR,
             report.switchAgentService,
             report.nameSite,
             report.nameGuardian
         );
-        await this.reportRepository.insert(reportEnity);
+        await this.reportRepository.insert(reportEnity).catch((error) => console.log(error));
 
         forEach(report.listetatLieux, async (etat: EtatLieux) => {
             let etatLieuxEnity = new EtatLieux(etat.etatLieux, etat.etatLieuxDesc);
             etatLieuxEnity.report = reportEnity;
-            await this.etatLieuxRepository.insert(etatLieuxEnity)
+            await this.etatLieuxRepository.insert(etatLieuxEnity).catch((error) => console.log(error));
         })
 
         forEach(files, async (file : any) => {
             let attachementsEntity = new Attachements(file.filename, file.originalname, file.path);
             attachementsEntity.report = reportEnity;
-            await this.attachementsEntity.insert(attachementsEntity);
+            await this.attachementsEntity.insert(attachementsEntity).catch((error) => console.log(error));
         })
     }
 }
