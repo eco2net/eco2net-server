@@ -1,5 +1,5 @@
 import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, Timestamp } from "typeorm";
-import { Attachements } from "./attachement.entity";
+import { Attachements } from "./Attachement.entity";
 import { EtatLieux } from "./EtatLieux.entity";
 
 @Entity()

@@ -6,7 +6,7 @@ import { TypeOrmModule } from '@nestjs/typeorm'
 import { Report } from './report/entities/Report.entity';
 import { EtatLieux } from './report/entities/EtatLieux.entity';
 import { PhotosModule } from './photos/photos.module';
-import { Attachements } from './report/entities/attachement.entity';
+import { Attachements } from './report/entities/Attachement.entity';
 
 @Module({
   imports: [ReportModule,
