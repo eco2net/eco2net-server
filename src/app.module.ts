@@ -3,10 +3,10 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ReportModule } from './report/report.module';
 import { TypeOrmModule } from '@nestjs/typeorm'
-import { Report } from './report/entities/Report.entity';
-import { EtatLieux } from './report/entities/EtatLieux.entity';
 import { PhotosModule } from './photos/photos.module';
+import { Report } from './report/entities/Report.entity';
 import { Attachements } from './report/entities/Attachement.entity';
+import { EtatLieux } from './report/entities/EtatLieux.entity';
 
 @Module({
   imports: [ReportModule,
@@ -17,7 +17,7 @@ import { Attachements } from './report/entities/Attachement.entity';
       username: 'user',
       password: 'password123',
       database: 'postgres',
-      entities: [Report, EtatLieux, Attachements],
+      entities: [Report,Attachements,EtatLieux],
       synchronize: true,
     }),
     PhotosModule
