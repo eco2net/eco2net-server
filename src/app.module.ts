@@ -8,20 +8,29 @@ import { Report } from './entities/Report.entity';
 import { Attachements } from './entities/Attachement.entity';
 import { EtatLieux } from './entities/EtatLieux.entity';
 
+require('dotenv').config();
+
 @Module({
   imports: [ReportModule,
     TypeOrmModule.forRoot({
+      name: 'default',
       type: 'postgres',
-      host: '127.0.0.1',
-      port: 5432,
-      username: 'user',
-      password: 'password123',
-      database: 'postgres',
+      host: process.env.PGHOST,
+      port: parseInt(process.env.PGPORT),
+      username: process.env.PGUSR,
+      password: process.env.PGPWD,
+      database: process.env.PGDB,
       entities: [
-         "dist/entities/**/*.js",
-      ],
-      autoLoadEntities: true,
+        "dist/entities/**/*.js",
+     ],
+     autoLoadEntities: true,
       synchronize: true,
+      ssl: true,
+      extra: {
+        ssl: {
+          rejectUnauthorized: false
+        }
+      }
     }),
     PhotosModule
   ],

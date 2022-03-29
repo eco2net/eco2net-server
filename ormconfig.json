@@ -5,6 +5,6 @@
     "username": "user",
     "password": "password123",
     "database": "postgres",
-    "entities": "[Users, Report, EtatLieux]",
+    "entities": ["Users", "Report", "EtatLieux"],
     "synchronize": true
   }

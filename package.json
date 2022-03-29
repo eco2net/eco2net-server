@@ -1,9 +1,6 @@
 {
   "name": "track-clean-back",
   "version": "0.0.1",
-  "engines": {
-    "node": "16.13.2"
-  },
   "description": "",
   "author": "",
   "private": true,
