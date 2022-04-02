@@ -1,5 +1,5 @@
 import { IsArray, IsBoolean, IsNotEmpty, IsNumber, IsString } from "class-validator";
-import { EtatLieux } from "../../entities/EtatLieux.entity";
+import { EtatLieux } from "../../entities/etatlieux.entity";
 
 export class ReportDto {
 

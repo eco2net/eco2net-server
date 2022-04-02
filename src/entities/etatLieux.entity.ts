@@ -1,5 +1,5 @@
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-import { Report } from "./Report.entity";
+import { Report } from "./report.entity";
 
 @Entity()
 export class EtatLieux {

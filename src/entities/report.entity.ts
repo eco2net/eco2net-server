@@ -1,6 +1,6 @@
 import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, Timestamp } from "typeorm";
-import { Attachements } from "./Attachement.entity";
-import { EtatLieux } from "./EtatLieux.entity";
+import { Attachements } from "./attachement.entity";
+import { EtatLieux } from "./etatlieux.entity";
 
 @Entity()
 export class Report {
