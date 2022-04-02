@@ -2,9 +2,9 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { ReportDto } from './dto/report.dto';
-import { Attachements } from './entities/Attachement.entity';
-import { EtatLieux } from './entities/EtatLieux.entity';
-import { Report } from './entities/Report.entity';
+import { Attachements } from '../entities/Attachement.entity';
+import { EtatLieux } from '../entities/EtatLieux.entity';
+import { Report } from '../entities/Report.entity';
 const { forEach } = require('p-iteration');
 
 @Injectable()

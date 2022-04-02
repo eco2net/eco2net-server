@@ -3,7 +3,7 @@ import { FilesInterceptor } from '@nestjs/platform-express';
 import { multerOptions } from 'src/config/Multer.config';
 import { InsertResult } from 'typeorm';
 import { ReportDto } from './dto/report.dto';
-import { Report } from './entities/Report.entity';
+import { Report } from '../entities/Report.entity';
 import { ReportService } from './report.service';
 
 @Controller('report')
