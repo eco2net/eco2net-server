@@ -4,9 +4,6 @@ import { AppService } from './app.service';
 import { ReportModule } from './report/report.module';
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { PhotosModule } from './photos/photos.module';
-import { Report } from './entities/Report.entity';
-import { Attachements } from './entities/Attachement.entity';
-import { EtatLieux } from './entities/EtatLieux.entity';
 
 require('dotenv').config();
 
