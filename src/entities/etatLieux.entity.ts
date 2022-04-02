@@ -2,7 +2,7 @@ import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColum
 import { Report } from "./report.entity";
 
 @Entity()
-export class EtatLieux {
+export class Etatlieux {
 
     constructor(
         etatLieux: String, 

@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { ReportDto } from './dto/report.dto';
 import { Attachements } from '../entities/attachement.entity';
-import { EtatLieux } from '../entities/etatlieux.entity';
+import { Etatlieux } from '../entities/etatlieux.entity';
 import { Report } from '../entities/report.entity';
 const { forEach } = require('p-iteration');
 
@@ -14,8 +14,8 @@ export class ReportService {
         @InjectRepository(Report)
         private reportRepository: Repository<Report>,
 
-        @InjectRepository(EtatLieux)
-        private etatLieuxRepository: Repository<EtatLieux>,
+        @InjectRepository(Etatlieux)
+        private etatLieuxRepository: Repository<Etatlieux>,
 
         @InjectRepository(Attachements)
         private attachementsEntity: Repository<Attachements>
@@ -40,8 +40,8 @@ export class ReportService {
         );
         await this.reportRepository.insert(reportEnity).catch((error) => console.log(error));
 
-        forEach(report.listetatLieux, async (etat: EtatLieux) => {
-            let etatLieuxEnity = new EtatLieux(etat.etatLieux, etat.etatLieuxDesc);
+        forEach(report.listetatLieux, async (etat: Etatlieux) => {
+            let etatLieuxEnity = new Etatlieux(etat.etatLieux, etat.etatLieuxDesc);
             etatLieuxEnity.report = reportEnity;
             await this.etatLieuxRepository.insert(etatLieuxEnity).catch((error) => console.log(error));
         })

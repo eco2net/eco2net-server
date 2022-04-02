@@ -1,6 +1,6 @@
 import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, Timestamp } from "typeorm";
 import { Attachements } from "./attachement.entity";
-import { EtatLieux } from "./etatlieux.entity";
+import { Etatlieux } from "./etatlieux.entity";
 
 @Entity()
 export class Report {
@@ -43,8 +43,8 @@ export class Report {
     @CreateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP(6)" })
     createdAt: Date
 
-    @OneToMany(() => EtatLieux, etatlieux => etatlieux.report)
-    listetatLieux: EtatLieux[]
+    @OneToMany(() => Etatlieux, etatlieux => etatlieux.report)
+    listetatLieux: Etatlieux[]
 
     @OneToMany(() => Attachements, attachement => attachement.report)
     attachements: Attachements[]

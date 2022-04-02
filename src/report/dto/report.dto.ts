@@ -1,5 +1,5 @@
 import { IsArray, IsBoolean, IsNotEmpty, IsNumber, IsString } from "class-validator";
-import { EtatLieux } from "../../entities/etatlieux.entity";
+import { Etatlieux } from "../../entities/etatlieux.entity";
 
 export class ReportDto {
 
@@ -27,5 +27,5 @@ export class ReportDto {
     nameGuardian: String;
 
     @IsArray()
-    listetatLieux: EtatLieux[]
+    listetatLieux: Etatlieux[]
 }
