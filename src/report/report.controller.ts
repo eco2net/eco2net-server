@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Param, Post, UploadedFiles, UseInterceptors } from '@nestjs/common';
 import { FilesInterceptor } from '@nestjs/platform-express';
-import { multerOptions } from 'src/config/Multer.config';
+import { multerOptions } from 'src/config/multer.config';
 import { InsertResult } from 'typeorm';
 import { ReportDto } from './dto/report.dto';
 import { Report } from '../entities/report.entity';
