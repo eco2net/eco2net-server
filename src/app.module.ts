@@ -12,22 +12,15 @@ require('dotenv').config();
     TypeOrmModule.forRoot({
       name: 'default',
       type: 'postgres',
-      host: process.env.PGHOST,
-      port: parseInt(process.env.PGPORT),
-      username: process.env.PGUSR,
-      password: process.env.PGPWD,
-      database: process.env.PGDB,
+      host: process.env.PGHOSTLOCAL,
+      port: parseInt(process.env.PGPORTLOCAL),
+      username: process.env.PGUSRLOCAL,
+      password: process.env.PGPWDLOCAL,
+      database: process.env.PGDBLOCAL,
       entities: [
         "dist/entities/**/*.js",
      ],
-     autoLoadEntities: true,
       synchronize: true,
-      ssl: true,
-      extra: {
-        ssl: {
-          rejectUnauthorized: false
-        }
-      }
     }),
     PhotosModule
   ],
