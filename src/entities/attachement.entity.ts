@@ -5,26 +5,26 @@ import { Report } from "./report.entity";
 export class Attachements {
 
     constructor(
-        name: String,
         originalName: String,
-        path: String
+        path: String,
+        key: String
     ) {
-        this.name = name;
         this.originalName = originalName
         this.path = path
+        this.key = key
     }
 
     @PrimaryGeneratedColumn()
     id: number;
-
-    @Column()
-    name: String;
-
+    
     @Column()
     originalName: String;
 
     @Column()
     path: String;
+
+    @Column()
+    key: String
 
     @ManyToOne(() => Report, report => report.attachements)
     report: Report

@@ -47,7 +47,7 @@ export class ReportService {
         })
 
         forEach(files, async (file : any) => {
-            let attachementsEntity = new Attachements(file.filename, file.originalname, file.path);
+            let attachementsEntity = new Attachements(file.originalname, file.location, file.key);
             attachementsEntity.report = reportEnity;
             await this.attachementsEntity.insert(attachementsEntity).catch((error) => console.log(error));
         })
