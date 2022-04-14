@@ -5,9 +5,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Report } from '../entities/report.entity';
 import { Attachements } from '../entities/attachement.entity';
 import { Etatlieux } from '../entities/etatlieux.entity';
+import User from 'src/entities/user.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Report,Attachements,Etatlieux])],
+  imports: [TypeOrmModule.forFeature([Report,Attachements,Etatlieux, User])],
   controllers: [ReportController],
   providers: [ReportService]
 })

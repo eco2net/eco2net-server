@@ -5,9 +5,10 @@ import { ReportModule } from './report/report.module';
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { PhotosModule } from './photos/photos.module';
 import { ConfigModule } from '@nestjs/config';
+import { UsersModule } from './users/users.module';
+import { AuthModule } from './auth/auth.module';
 import databaseConfig from './config/database.config';
 import * as Joi from 'joi';
-
 require('dotenv').config();
 
 @Module({
@@ -35,7 +36,9 @@ require('dotenv').config();
      ],
       synchronize: true,
     }),
-    PhotosModule
+    PhotosModule,
+    UsersModule,
+    AuthModule
   ],
   controllers: [AppController],
   providers: [AppService],
