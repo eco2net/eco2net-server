@@ -38,7 +38,7 @@ export class UsersService {
       return users
     }
 
-    async deleteUser(user : UserDto) : Promise<User>{
+    async deleteUser(user : User) : Promise<User>{
       console.log(user);
       try {
        return await this.usersRepository.remove(user);

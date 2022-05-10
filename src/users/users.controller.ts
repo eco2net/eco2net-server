@@ -1,4 +1,5 @@
-import { Body, Controller, Delete, Get, HttpException, HttpStatus, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpException, HttpStatus, Post, UsePipes, ValidationPipe } from '@nestjs/common';
+import User from 'src/entities/user.entity';
 import { UserDto } from './dto/user.dto';
 import { UsersService } from './users.service';
 
@@ -17,7 +18,7 @@ export class UsersController {
     }
 
     @Delete()
-    async deleteUser(@Body() user: UserDto) {
+    async deleteUser(@Body() user: User) {
         return await this.usersService.deleteUser(user);
     }
 }
