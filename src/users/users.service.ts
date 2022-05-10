@@ -1,6 +1,6 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { ConsoleLogger, HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import User from 'src/entities/user.entity';
+import User from '../entities/user.entity';
 import { Repository } from 'typeorm';
 import { UserDto } from './dto/user.dto';
 
@@ -14,18 +14,36 @@ export class UsersService {
     async getUser(login: string) {
         const user = await this.usersRepository.findOne({
           login: login
-        });
-        if (user) {
-          console.log(user);
-          return user;
-        }
-        throw new HttpException('User with this email does not exist', HttpStatus.NOT_FOUND);
+        }).catch((error) => {
+          throw new HttpException('Utilisateur introuvable', HttpStatus.NOT_FOUND);
+        })
       }
 
-    async createUser( user : UserDto) {
+    async createUser( user : UserDto) : Promise<User> {
+      console.log(user);
         const newUser = await this.usersRepository.create(user);
         await this.usersRepository.save(newUser).catch((error) => {
-          throw new HttpException('Erreur lors de la création de l\'utilisateur', HttpStatus.INTERNAL_SERVER_ERROR);
+          console.log(error);
+          throw new HttpException(`Erreur lors de la création de l'utilisateur`, HttpStatus.INTERNAL_SERVER_ERROR);
         });
+        return newUser;
+    }
+
+    async getAllUsers() : Promise<User[]> {
+      try {
+        var users = await this.usersRepository.find();
+      } catch (error) {
+        console.log(error)
+      }
+      return users
+    }
+
+    async deleteUser(user : UserDto) : Promise<User>{
+      console.log(user);
+      try {
+       return await this.usersRepository.remove(user);
+      } catch (error) {
+        throw new HttpException(`Erreur lors de la suppression de l'utilisateur`, HttpStatus.INTERNAL_SERVER_ERROR);
+      }
     }
 }

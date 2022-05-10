@@ -1,6 +1,6 @@
 export class UserDto {
-    email : string;
+    login : string;
     name : string;
     password : string;
     isAdmin : boolean
-}
+} 
