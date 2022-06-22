@@ -9,7 +9,7 @@ export class UserDto {
     @IsString()
     @IsNotEmpty()
     name : string;
-
+    
     @IsEmail()
     email : string;
 
