@@ -1,14 +1,17 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ReportModule } from './report/report.module';
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { PhotosModule } from './photos/photos.module';
 import { ConfigModule } from '@nestjs/config';
+import { UsersModule } from './users/users.module';
+import { AuthModule } from './auth/auth.module';
+import { PdfModule } from './pdf/pdf.module';
 import databaseConfig from './config/database.config';
 import * as Joi from 'joi';
-
 require('dotenv').config();
+import LogsMiddleware from "./config/logs/logs.middleware";
 
 @Module({
   imports: [
@@ -35,9 +38,18 @@ require('dotenv').config();
      ],
       synchronize: true,
     }),
-    PhotosModule
+    PhotosModule,
+    UsersModule,
+    AuthModule,
+    PdfModule
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule { }
+export class AppModule { 
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(LogsMiddleware)
+      .forRoutes('*');
+  }
+}
