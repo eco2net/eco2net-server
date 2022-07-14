@@ -20,10 +20,8 @@ export class UsersService {
       }
 
     async createUser( user : UserDto) : Promise<User> {
-      console.log(user);
         const newUser = await this.usersRepository.create(user);
         await this.usersRepository.save(newUser).catch((error) => {
-          console.log(error);
           throw new HttpException(`Erreur lors de la création de l'utilisateur`, HttpStatus.INTERNAL_SERVER_ERROR);
         });
         return newUser;

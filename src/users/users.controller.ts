@@ -19,7 +19,6 @@ export class UsersController {
 
     @Delete()
     async deleteUser(@Body() user: User) {
-        console.log(user)
         return await this.usersService.deleteUser(user);
     }
 }
