@@ -109,20 +109,30 @@ export class PdfService {
         let position = 345;
         for (let i = 0; i < listetatLieux.length; i++) {
             let remark = listetatLieux[i];
-            let nbLinesDescirption = this.getNbLinesDescription(remark.etatLieuxDesc);
             console.log(i)
             if (i === 0) {
                 position = 345;
             }
             else {
-                position = position + nbLinesDescirption * 25;
+                // let nbLinesDescirption = this.getNbLinesDescription(listetatLieux[i - 1].etatLieuxDesc);
+                let nbLinesDescirption = (listetatLieux[i - 1].etatLieuxDesc.length)/75
+                // console.log(nbLinesDescirption);
+
+                console.log(colors.red.underline(position + nbLinesDescirption * 20))
+                position = (position + nbLinesDescirption * 20) % 680;
+
+                console.log(colors.green.underline("i : " + i + " position : " + position + " pos : " + remark.etatLieux))
+
                 //If poisition is bigger than page size
-                if (position > 650) {
-                    doc.addPage({ format: "LETTER" });
-                    position = 50;
-                }
+                // if (position > 650) {
+                //     doc.addPage({ format: "LETTER" });
+                //     position = 50;
+                // }
+
+                // console.log(colors.red.underline("i : " + i + " position : " + position + " pos : " + remark.etatLieux))
+
             }
-            
+
             this.generateTableRow(
                 doc,
                 position,
@@ -132,8 +142,15 @@ export class PdfService {
             );
 
             // Add space between each remark
-            position += 50;
+            position += 25;
         }
+
+        console.log(doc.x + " " + doc.y);
+        doc.fontSize(12)
+        .font("Helvetica-Bold")
+        .text("Pièce jointe", 50, doc.y + 15);
+        this.generateHr(doc, doc.y + 15);
+
     }
 
     async generatePDF(report): Promise<Buffer> {
