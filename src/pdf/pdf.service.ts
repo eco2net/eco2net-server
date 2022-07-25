@@ -19,6 +19,15 @@ export class PdfService {
         doc.image('src/assets/image003.png', 230, 0, { fit: [140, 140], align: 'center', valign: 'center' });
     }
 
+    getLineTest(doc, debut, fin) {
+        doc
+            .strokeColor("red")
+            .lineWidth(2)
+            .moveTo(50, debut)
+            .lineTo(50, fin)
+            .stroke();
+    }
+
     generateHr(doc, y) {
         doc
             .strokeColor("#292828")
@@ -79,19 +88,16 @@ export class PdfService {
             .text("Le representant de la CCR :", 50, reportDetailsTop + 95)
             .font("Helvetica-Bold")
             .text(switchCCR, 200, reportDetailsTop + 95);
-
-        // this.generateHr(doc, reportDetailsTop + 120);
+            
     }
 
     generateTableRow(doc, y, item, description, fontSize) {
         doc
+            .fillColor('black')
             .fontSize(fontSize)
-            .text(item, 55, y, { width: 65 })
+            .text(item, 55, y)
+            .font("Helvetica")
             .text(description, 150, y)
-    }
-
-    getNbLinesDescription(description: String) {
-        return description.split('').filter((element => element === '\n')).length + 1;
     }
 
     generateRemarksPDF(doc, report) {
@@ -106,33 +112,14 @@ export class PdfService {
 
         this.generateTableRow(doc, reportRemarksTop + 55, "Lieu", "Description", 12);
 
-        let position = 345;
+        const marginBtwRemark = 30;
+        let position = 350;
         for (let i = 0; i < listetatLieux.length; i++) {
             let remark = listetatLieux[i];
-            console.log(i)
-            if (i === 0) {
-                position = 345;
-            }
-            else {
-                // let nbLinesDescirption = this.getNbLinesDescription(listetatLieux[i - 1].etatLieuxDesc);
-                let nbLinesDescirption = (listetatLieux[i - 1].etatLieuxDesc.length)/75
-                // console.log(nbLinesDescirption);
-
-                console.log(colors.red.underline(position + nbLinesDescirption * 20))
-                position = (position + nbLinesDescirption * 20) % 680;
-
-                console.log(colors.green.underline("i : " + i + " position : " + position + " pos : " + remark.etatLieux))
-
-                //If poisition is bigger than page size
-                // if (position > 650) {
-                //     doc.addPage({ format: "LETTER" });
-                //     position = 50;
-                // }
-
-                // console.log(colors.red.underline("i : " + i + " position : " + position + " pos : " + remark.etatLieux))
-
-            }
-
+        
+            if (i !== 0) position = doc.y + marginBtwRemark;
+        
+            console.log(colors.red.underline("i = " + i + " - " + remark.etatLieux + " - position " + position));
             this.generateTableRow(
                 doc,
                 position,
@@ -140,17 +127,7 @@ export class PdfService {
                 remark.etatLieuxDesc,
                 10
             );
-
-            // Add space between each remark
-            position += 25;
         }
-
-        console.log(doc.x + " " + doc.y);
-        doc.fontSize(12)
-        .font("Helvetica-Bold")
-        .text("Pièce jointe", 50, doc.y + 15);
-        this.generateHr(doc, doc.y + 15);
-
     }
 
     async generatePDF(report): Promise<Buffer> {
@@ -158,7 +135,8 @@ export class PdfService {
         const attachements = report.attachements.map((element) => element.path);
         const pdfBuffer: Buffer = await new Promise(async resolve => {
             const doc = new PDFDocument({
-                size: 'LETTER'
+                size: 'A4',
+                bufferPages: false
             })
 
             this.generateHeaderPDF(doc, report);
