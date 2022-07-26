@@ -88,7 +88,7 @@ export class PdfService {
             .text("Le representant de la CCR :", 50, reportDetailsTop + 95)
             .font("Helvetica-Bold")
             .text(switchCCR, 200, reportDetailsTop + 95);
-            
+
     }
 
     generateTableRow(doc, y, item, description, fontSize) {
@@ -116,9 +116,9 @@ export class PdfService {
         let position = 350;
         for (let i = 0; i < listetatLieux.length; i++) {
             let remark = listetatLieux[i];
-        
+
             if (i !== 0) position = doc.y + marginBtwRemark;
-        
+
             console.log(colors.red.underline("i = " + i + " - " + remark.etatLieux + " - position " + position));
             this.generateTableRow(
                 doc,
@@ -131,7 +131,9 @@ export class PdfService {
     }
 
     async generatePDF(report): Promise<Buffer> {
-        console.log(report);
+        // console.log(report);
+        let cpt = 0;
+        let positionY = 50;
         const attachements = report.attachements.map((element) => element.path);
         const pdfBuffer: Buffer = await new Promise(async resolve => {
             const doc = new PDFDocument({
@@ -143,17 +145,35 @@ export class PdfService {
             this.generateDetailsPDF(doc, report);
             this.generateRemarksPDF(doc, report);
 
-            // for (let i = 0; i < attachements.length; i++) {
-            //     if (i % 2 === 0) doc.addPage();
-            //     let res = "data:image/png;base64,";
-            //     res += await this.imageToBase(attachements[i]);
-            //     doc.image(res, 181, 136 * i % 2 + 136, { fit: [300, 300], align: 'center', valign: 'center', link: attachements[i] });
-            // }
+            doc.addPage();
+            doc.fontSize(12)
+                .font("Helvetica-Bold")
+                .text("Pièces jointes", 50, 25);
 
-            // this.generateFooter(doc);
+            this.generateHr(doc, 40);
 
-            // data:image/png;base64,
-            // console.log(colors.red.underline(res));
+            doc.moveDown(5);
+
+            for (let i = 0; i < attachements.length; i++) {
+                let x = (i%2)*300 + 30;
+
+                if (cpt%4 === 0 && cpt != 0) {
+                    doc.addPage();
+                    cpt = 0
+                }
+
+                if(cpt === 0 || cpt === 1) positionY = 50
+                else positionY = 400;
+
+                //Get base64 of img
+                let res = "data:image/png;base64,";
+                res += await this.imageToBase(attachements[i]);
+
+                console.log("i : " + i + ", x : " + x +  ", y : "+ positionY);
+                doc.image(res,x,positionY, { fit: [250, 250], align: 'center', valign: 'center', link: attachements[i] })
+                cpt++
+            }
+
             doc.end();
 
             const buffer = []
