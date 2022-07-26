@@ -9,12 +9,6 @@ export class PdfService {
 
     constructor() { }
 
-    imageToBase(url: String) {
-        return new Promise(resolve => {
-            resolve(imageToBase64(url))
-        })
-    }
-
     generateHeaderPDF(doc, report) {
         doc.image('src/assets/image003.png', 230, 0, { fit: [140, 140], align: 'center', valign: 'center' });
     }
@@ -130,10 +124,25 @@ export class PdfService {
         }
     }
 
+    imageToBase(url: String) {
+        return new Promise(async resolve => {
+            let res = await imageToBase64(url)
+            resolve("data:image/png;base64,"+ res);
+        })
+    }
+
+    getAllImgToBase64(attachements) {
+        let promises = [];
+        for (let i = 0; i < attachements.length; i++) {
+            promises.push(this.imageToBase(attachements[i]))
+        }
+        return Promise.all(promises);
+    }
+    
     async generatePDF(report): Promise<Buffer> {
-        // console.log(report);
         let cpt = 0;
         let positionY = 50;
+
         const attachements = report.attachements.map((element) => element.path);
         const pdfBuffer: Buffer = await new Promise(async resolve => {
             const doc = new PDFDocument({
@@ -154,23 +163,24 @@ export class PdfService {
 
             doc.moveDown(5);
 
-            for (let i = 0; i < attachements.length; i++) {
+            //Get all img base64 in array
+            let arrayOfBase64 = await this.getAllImgToBase64(attachements);
+
+            for (let i = 0; i < arrayOfBase64.length; i++) {
+                //One picture at 30px and the second on the same line at 330px
                 let x = (i%2)*300 + 30;
 
+                //Max 4 pictures per page
                 if (cpt%4 === 0 && cpt != 0) {
                     doc.addPage();
                     cpt = 0
                 }
 
+                //Two first picture at y = 50px and the two others at y=400
                 if(cpt === 0 || cpt === 1) positionY = 50
                 else positionY = 400;
 
-                //Get base64 of img
-                let res = "data:image/png;base64,";
-                res += await this.imageToBase(attachements[i]);
-
-                console.log("i : " + i + ", x : " + x +  ", y : "+ positionY);
-                doc.image(res,x,positionY, { fit: [250, 250], align: 'center', valign: 'center', link: attachements[i] })
+                doc.image(arrayOfBase64[i],x,positionY, { fit: [250, 250], align: 'center', valign: 'center', link: attachements[i] })
                 cpt++
             }
 
