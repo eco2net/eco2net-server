@@ -8,6 +8,7 @@ import { ConfigModule } from '@nestjs/config';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { PdfModule } from './pdf/pdf.module';
+import { MailModule } from './mail/mail.module';
 import databaseConfig from './config/database.config';
 import * as Joi from 'joi';
 require('dotenv').config();
@@ -41,7 +42,8 @@ import LogsMiddleware from "./config/logs/logs.middleware";
     PhotosModule,
     UsersModule,
     AuthModule,
-    PdfModule
+    PdfModule,
+    MailModule
   ],
   controllers: [AppController],
   providers: [AppService],
