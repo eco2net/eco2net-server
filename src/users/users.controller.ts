@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, HttpException, HttpStatus, Post, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpException, HttpStatus, Param, Post, UsePipes, ValidationPipe } from '@nestjs/common';
 import User from '../entities/user.entity';
 import { UserDto } from './dto/user.dto';
 import { UsersService } from './users.service';
@@ -20,5 +20,10 @@ export class UsersController {
     @Delete()
     async deleteUser(@Body() user: User) {
         return await this.usersService.deleteUser(user);
+    }
+
+    @Get(":login")
+    async getUserByLogin(@Param() param) {
+        return await this.usersService.getUser(param.login)
     }
 }

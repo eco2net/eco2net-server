@@ -11,12 +11,13 @@ export class UsersService {
         private usersRepository : Repository<User>
     ){}
 
-    async getUser(login: string) {
+    async getUser(login : string) {
         const user = await this.usersRepository.findOne({
-          login: login
+           where:{ login: login }
         }).catch((error) => {
-          throw new HttpException('Utilisateur introuvable', HttpStatus.NOT_FOUND);
+          throw new HttpException('Erreur lors de la recherche de l\'utilisateur', HttpStatus.INTERNAL_SERVER_ERROR);
         })
+        return user
       }
 
     async createUser( user : UserDto) : Promise<User> {
