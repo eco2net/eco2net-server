@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import User from '../entities/user.entity';
 import { Repository } from 'typeorm';
 import { UserDto } from './dto/user.dto';
+const bcrypt = require('bcrypt');
 
 @Injectable()
 export class UsersService {
@@ -20,7 +21,7 @@ export class UsersService {
         return user
       }
 
-    async createUser( user : UserDto) : Promise<User> {
+    async createUser( user : UserDto) : Promise<User> {        
         const newUser = await this.usersRepository.create(user);
         await this.usersRepository.save(newUser).catch((error) => {
           throw new HttpException(`Erreur lors de la création de l'utilisateur`, HttpStatus.INTERNAL_SERVER_ERROR);
