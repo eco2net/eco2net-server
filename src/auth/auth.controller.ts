@@ -7,13 +7,11 @@ export class AuthController {
     constructor(private authService : AuthService) {
     }
 
-  @UseGuards(AuthGuard('local'))
+//   @UseGuards(AuthGuard('local'))
   @Post('/login')
-  async login(@Request() req) {
-    return req.user;
+  async login(@Body() user) {
+    return await this.authService.login(user);
   }
-
-
 
   @Post('/register')
   async register(@Body() user) {
