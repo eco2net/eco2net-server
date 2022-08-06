@@ -28,32 +28,41 @@ export class AuthService {
 
     }
 
+    async comparePwd(inputPwd : String, userPwd : String ) {
+        return await bcrypt.compare(
+            inputPwd,
+            userPwd,
+        );
+    }
+
     async login(user) {
         try {
             const currentUser = await this.userService.getUser(user.login);
-            console.log(user);
-            const isMatchingPassword = await bcrypt.compare(
+            console.log(currentUser);
+            const isMatchingPassword = await this.comparePwd(
                 user.password,
                 currentUser.password,
             );
-            console.log(currentUser);
-            console.log(isMatchingPassword);
-            if(!isMatchingPassword) {
-                throw new HttpException('Identifiant incorrect, veuillez réessayer', HttpStatus.BAD_REQUEST)
+
+            if (!isMatchingPassword) {
+                 throw new HttpException('Identifiant incorrect, veuillez réessayer', HttpStatus.BAD_REQUEST)
             }
             currentUser.password = undefined;
             return currentUser
-        } catch(error) {
-            console.log(error)
+        } catch (error) {
+            throw new HttpException('Identifiant incorrect, veuillez réessayer', HttpStatus.BAD_REQUEST)
         }
     }
 
     async validateUser(login: string, pass: string): Promise<any> {
         const user = await this.userService.getUser(login);
-        if (user && user.password === pass) {
+        const isMatchingPassword = await this.comparePwd(
+            pass,
+            user.password,
+        );
+
+        if (user && isMatchingPassword) {
             const { password, ...result } = user;
-            console.log(password);
-            console.log(result);
             return result
         }
         return null;
