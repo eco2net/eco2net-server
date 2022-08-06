@@ -3,11 +3,19 @@ import { UserDto } from 'src/users/dto/user.dto';
 import { UsersService } from '../users/users.service';
 const bcrypt = require('bcrypt');
 import { PostgresErrorCode } from "../Constants";
+import { JwtService } from '@nestjs/jwt';
+import { ConfigService } from '@nestjs/config';
+import User from 'src/entities/user.entity';
+import TokenPayload from './interface/tokenPayload.interface';
 
 
 @Injectable()
 export class AuthService {
-    constructor(private userService: UsersService) { }
+    constructor(
+        private userService: UsersService,
+        private jwtService : JwtService,
+        private configService : ConfigService
+        ) {}
 
     async register(user: UserDto) {
         const hashedPassword = await bcrypt.hash(user.password, 10);
@@ -24,8 +32,6 @@ export class AuthService {
             }
             throw new HttpException('Oups ! Une erreur interne est survenue', HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
-
     }
 
     async comparePwd(inputPwd : String, userPwd : String ) {
@@ -33,25 +39,6 @@ export class AuthService {
             inputPwd,
             userPwd,
         );
-    }
-
-    async login(user) {
-        try {
-            const currentUser = await this.userService.getUser(user.login);
-            console.log(currentUser);
-            const isMatchingPassword = await this.comparePwd(
-                user.password,
-                currentUser.password,
-            );
-
-            if (!isMatchingPassword) {
-                 throw new HttpException('Identifiant incorrect, veuillez réessayer', HttpStatus.BAD_REQUEST)
-            }
-            currentUser.password = undefined;
-            return currentUser
-        } catch (error) {
-            throw new HttpException('Identifiant incorrect, veuillez réessayer', HttpStatus.BAD_REQUEST)
-        }
     }
 
     async validateUser(login: string, pass: string): Promise<any> {
@@ -67,4 +54,11 @@ export class AuthService {
         }
         return null;
     }
+
+    public getCookieWithJwtToken(user: User) {
+        const {password, ...result} = user
+        const payload: TokenPayload = result;
+        const token = this.jwtService.sign(payload);
+        return `Authentication=${token}; HttpOnly; Path=/; Max-Age=${this.configService.get('JWT_EXPIRATION_TIME')}`;
+      }
 }
