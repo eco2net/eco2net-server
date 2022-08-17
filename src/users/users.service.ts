@@ -22,6 +22,16 @@ export class UsersService {
         throw new HttpException('Login inexistant', HttpStatus.NOT_FOUND)
       }
 
+      async getUserById(id : number) {
+        const user = await this.usersRepository.findOne({
+           where:{ id: id }
+        }).catch((error) => {
+          throw new HttpException('Erreur lors de la recherche de l\'utilisateur', HttpStatus.INTERNAL_SERVER_ERROR);
+        })
+        if(user) return user
+        throw new HttpException('Login inexistant', HttpStatus.NOT_FOUND)
+      }
+
     async createUser( user : UserDto) : Promise<User> {        
         const newUser = await this.usersRepository.create(user);
         await this.usersRepository.save(newUser);

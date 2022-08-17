@@ -2,7 +2,7 @@ import { Controller, Request, Post, UseGuards, Body, HttpCode, Req, Res } from '
 import { AuthGuard } from '@nestjs/passport';
 import { AuthService } from './auth.service';
 import RequestWithUser from './interface/requestWithUser.interface';
-import { LocalAuthenticationGuard } from './localAuthentication.guard';
+import { LocalAuthenticationGuard } from './guards/localAuthentication.guard';
 
 @Controller('auth')
 export class AuthController {
@@ -15,9 +15,10 @@ export class AuthController {
   @Post('/login')
   async login(@Req() request: RequestWithUser, @Res() response) {
     const user = request.user;
-    const cookie = this.authService.getCookieWithJwtToken(user);
+    const cookie = this.authService.getCookieWithJwtToken(user.id);
     console.log(cookie)
     response.setHeader('Set-Cookie', cookie);
+    console.log(response)
     return response.send(user);
   }
 

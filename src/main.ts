@@ -3,11 +3,18 @@ import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import { config } from 'aws-sdk';
 import { AppModule } from './app.module';
+import * as cookieParser from 'cookie-parser';
+
 require('dotenv').config();
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  app.enableCors();
+  app.enableCors({
+      origin: ['http://localhost:8080', 'https://thirsty-swirles-470da8.netlify.app/' ],
+      credentials: true,
+  });
+  
+  app.use(cookieParser());
 
   app.useGlobalPipes(
     new ValidationPipe({
