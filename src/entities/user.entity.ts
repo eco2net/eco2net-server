@@ -1,4 +1,5 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Report } from './report.entity';
  
 @Entity()
 class User {
@@ -16,6 +17,9 @@ class User {
 
   @Column()
   public isAdmin: boolean;
+
+  @OneToMany(() => Report, (report) => report.user)
+  report: Report
 
   @CreateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP(6)" })
   createdAt: Date

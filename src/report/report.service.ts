@@ -22,12 +22,12 @@ export class ReportService {
     ) { }
     
     async getAllReports(): Promise<Report[]> {
-        let reports = await this.reportRepository.find({ relations: ["listetatLieux", "attachements"] })
+        let reports = await this.reportRepository.find({ relations: ["listetatLieux", "attachements", "user"] })
         return reports;
     }
 
     async getReportById(id : number): Promise<Report> {
-        let report = await this.reportRepository.findOne(id, { relations: ["listetatLieux", "attachements"] });
+        let report = await this.reportRepository.findOne(id, { relations: ["listetatLieux", "attachements", "user"] });
         return report
     }
 
@@ -36,7 +36,8 @@ export class ReportService {
             report.switchCCR,
             report.switchAgentService,
             report.nameSite,
-            report.nameGuardian
+            report.nameGuardian,
+            report.user
         );
         await this.reportRepository.insert(reportEnity).catch((error) => console.log(error));
 

@@ -51,6 +51,8 @@ export class AuthService {
         if (user && isMatchingPassword) {
             const { password, ...result } = user;
             return result
+        } else {
+            throw new HttpException('Email ou mot de passe incrorrect', HttpStatus.BAD_REQUEST);
         }
         return null;
     }

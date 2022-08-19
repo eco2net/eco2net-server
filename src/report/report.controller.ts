@@ -30,6 +30,7 @@ export class ReportController {
   addReport(@UploadedFiles() files: Array<Express.Multer.File>, @Body() report): any {
 
     let reportDto = JSON.parse(report.form);
+    console.log(report);
     return this.reportService.addReport(reportDto, files);
   }
 }

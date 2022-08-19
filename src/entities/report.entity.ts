@@ -1,6 +1,7 @@
-import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, Timestamp } from "typeorm";
+import { Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn, Timestamp } from "typeorm";
 import { Attachements } from "./attachement.entity";
 import { Etatlieux } from "./etatlieux.entity";
+import User from "./user.entity";
 
 @Entity()
 export class Report {
@@ -10,13 +11,15 @@ export class Report {
         switchCCR: Boolean,
         switchAgentService: Boolean,
         nameSite: String,
-        nameGuardian: String
+        nameGuardian: String,
+        user: String
     ) {
         this.switchMembreConseil = switchMembreConseil;
         this.switchCCR = switchCCR;
         this.switchAgentService = switchAgentService;
         this.nameSite = nameSite;
         this.nameGuardian = nameGuardian;
+        this.user = user
     }
 
     @PrimaryGeneratedColumn()
@@ -37,7 +40,7 @@ export class Report {
     @Column()
     nameGuardian: String;
 
-    @Column({default : 'User1'})
+    @ManyToOne(() => User, (user) => user.report)
     user: String;
 
     @CreateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP(6)" })
