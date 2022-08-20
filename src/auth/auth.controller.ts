@@ -8,8 +8,7 @@ import { LocalAuthenticationGuard } from './guards/localAuthentication.guard';
 export class AuthController {
     constructor(private authService : AuthService) {
     }
-
-  
+    
   @HttpCode(200)
   @UseGuards(LocalAuthenticationGuard)
   @Post('/login')
@@ -17,7 +16,6 @@ export class AuthController {
     const user = request.user;
     const cookie = this.authService.getCookieWithJwtToken(user.id);
     response.setHeader('Set-Cookie', cookie);
-    console.log(user)
     return response.send(user);
   }
 

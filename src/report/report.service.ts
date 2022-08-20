@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpCode, HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { ReportDto } from './dto/report.dto';
@@ -29,6 +29,20 @@ export class ReportService {
     async getReportById(id : number): Promise<Report> {
         let report = await this.reportRepository.findOne(id, { relations: ["listetatLieux", "attachements", "user"] });
         return report
+    }
+
+    async getReportsByUser(userId : number) : Promise<Report[]> {
+        try {
+            let reports = await this.reportRepository.find({
+                where : {
+                    userId : userId
+                },
+                relations : ["listetatLieux", "attachements", "user"]
+            })
+            return reports;
+        } catch (error) {
+            throw new HttpException('Oups ! Une erreur interne est survenue', HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     async addReport(report: ReportDto, files): Promise<any> {

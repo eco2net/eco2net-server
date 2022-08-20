@@ -24,6 +24,11 @@ export class ReportController {
     return this.reportService.getReportById(param.id);
   }
 
+  @Get('/user/:id')
+  getReportByUserId(@Param() param) : Promise<Report[]> {
+    return this.reportService.getReportsByUser(param.id);
+  }
+
 
   @Post()
   @UseInterceptors(FilesInterceptor('files[]',100, multerOptions))

@@ -40,6 +40,9 @@ export class Report {
     @Column()
     nameGuardian: String;
 
+    @Column()
+    userId : number;
+
     @ManyToOne(() => User, (user) => user.report)
     user: String;
 
