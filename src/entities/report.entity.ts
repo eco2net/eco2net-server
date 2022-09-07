@@ -12,14 +12,14 @@ export class Report {
         switchAgentService: Boolean,
         nameSite: String,
         nameGuardian: String,
-        user: String
+        userId: number
     ) {
         this.switchMembreConseil = switchMembreConseil;
         this.switchCCR = switchCCR;
         this.switchAgentService = switchAgentService;
         this.nameSite = nameSite;
         this.nameGuardian = nameGuardian;
-        this.user = user
+        this.userId = userId
     }
 
     @PrimaryGeneratedColumn()
