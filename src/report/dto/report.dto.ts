@@ -27,9 +27,9 @@ export class ReportDto {
     @IsNotEmpty()
     nameGuardian: String;
 
-    @IsString()
+    @IsNumber()
     @IsNotEmpty()
-    user : String;
+    userId : number;
 
     @IsArray()
     listetatLieux: Etatlieux[]

@@ -51,7 +51,7 @@ export class ReportService {
             report.switchAgentService,
             report.nameSite,
             report.nameGuardian,
-            report.user
+            report.userId
         );
         await this.reportRepository.insert(reportEnity).catch((error) => console.log(error));
 
