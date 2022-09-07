@@ -1,5 +1,6 @@
-import { Body, Controller, Delete, Get, HttpException, HttpStatus, Param, Post, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpException, HttpStatus, Param, Post, Put, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
 import JwtAuthenticationGuard from 'src/auth/guards/jwtAuthentification.guard';
+import { UpdateDateColumn } from 'typeorm';
 import User from '../entities/user.entity';
 import { UserDto } from './dto/user.dto';
 import { UsersService } from './users.service';
@@ -22,6 +23,12 @@ export class UsersController {
     @Delete()
     async deleteUser(@Body() user: User) {
         return await this.usersService.deleteUser(user);
+    }
+
+    @Put()
+    async updateUser(@Body() user) {
+        // console.log(user)
+        return await this.usersService.updateUser(user);
     }
 
     @Get(":login")

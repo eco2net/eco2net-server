@@ -38,6 +38,12 @@ export class UsersService {
         return newUser;
     }
 
+    async updateUser(user) : Promise<any> {
+      console.log(user);
+      const userUpdated = await this.usersRepository.update(user.id, user);
+      return userUpdated;
+    }
+
     async getAllUsers() : Promise<User[]> {
       try {
         var users = await this.usersRepository.find();
