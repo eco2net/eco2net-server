@@ -1,7 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { UserDto } from 'src/users/dto/user.dto';
 import { UsersService } from '../users/users.service';
-const bcrypt = require('bcrypt');
 import { PostgresErrorCode } from "../Constants";
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
@@ -18,11 +17,11 @@ export class AuthService {
         ) {}
 
     async register(user: UserDto) {
-        const hashedPassword = await bcrypt.hash(user.password, 10);
+        // const hashedPassword = await bcrypt.hash(user.password, 10);
         try {
             const createUserData = await this.userService.createUser({
                 ...user,
-                password: hashedPassword
+                password: user.password
             });
             createUserData.password = undefined;
             return createUserData;;
@@ -35,10 +34,7 @@ export class AuthService {
     }
 
     async comparePwd(inputPwd : String, userPwd : String ) {
-        return await bcrypt.compare(
-            inputPwd,
-            userPwd,
-        );
+        return inputPwd === userPwd;
     }
 
     async validateUser(login: string, pass: string): Promise<any> {
