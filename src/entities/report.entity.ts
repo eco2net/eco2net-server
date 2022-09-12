@@ -12,14 +12,12 @@ export class Report {
         switchAgentService: Boolean,
         nameSite: String,
         nameGuardian: String,
-        userId: number
     ) {
         this.switchMembreConseil = switchMembreConseil;
         this.switchCCR = switchCCR;
         this.switchAgentService = switchAgentService;
         this.nameSite = nameSite;
         this.nameGuardian = nameGuardian;
-        this.userId = userId
     }
 
     @PrimaryGeneratedColumn()
@@ -40,13 +38,10 @@ export class Report {
     @Column()
     nameGuardian: String;
 
-    @Column()
-    userId : number;
-
     @ManyToOne(() => User, (user) => user.report)
-    user: String;
+    user: User;
 
-    @CreateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP(6)" })
+    @CreateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP(6)"})
     createdAt: Date
 
     @OneToMany(() => Etatlieux, etatlieux => etatlieux.report)

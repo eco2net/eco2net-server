@@ -57,6 +57,7 @@ export class UsersService {
       try {
        return await this.usersRepository.remove(user);
       } catch (error) {
+        console.log(error);
         throw new HttpException(`Erreur lors de la suppression de l'utilisateur`, HttpStatus.INTERNAL_SERVER_ERROR);
       }
     }

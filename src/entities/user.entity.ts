@@ -19,7 +19,7 @@ class User {
   public isAdmin: boolean;
 
   @OneToMany(() => Report, (report) => report.user)
-  report: Report
+  report: Report[]
 
   @CreateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP(6)" })
   createdAt: Date
