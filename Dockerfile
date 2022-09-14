@@ -15,3 +15,12 @@ RUN npm install --only=production
 COPY . .
 COPY --from=development /usr/src/app/dist ./dist
 CMD ["node", "dist/main"]
+
+
+# FROM node:12.19.0-alpine3.9 as production
+# ENV NODE_ENV=production
+# WORKDIR /app
+# COPY ["package.json", "package-lock.json*", "./"]
+# RUN npm install --production
+# COPY . .
+# CMD ["node", "dist/main"]

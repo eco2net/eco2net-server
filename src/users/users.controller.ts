@@ -1,5 +1,6 @@
 import { Body, Controller, Delete, Get, HttpException, HttpStatus, Param, Post, Put, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
 import JwtAuthenticationGuard from 'src/auth/guards/jwtAuthentification.guard';
+import { LocalAuthenticationGuard } from 'src/auth/guards/localAuthentication.guard';
 import { UpdateDateColumn } from 'typeorm';
 import User from '../entities/user.entity';
 import { UserDto } from './dto/user.dto';
@@ -14,7 +15,7 @@ export class UsersController {
         return await this.usersService.createUser(user);
     }
 
-    @UseGuards(JwtAuthenticationGuard)
+    // @UseGuards(LocalAuthenticationGuard)
     @Get()
     async getAllUsers() {
         return await this.usersService.getAllUsers();

@@ -13,7 +13,7 @@ import { LocalStrategy } from 'src/auth/strategies/local.strategy';
 export class ReportController {
   constructor(private readonly reportService: ReportService) { }
 
-  @UseGuards(JwtAuthenticationGuard)
+  // @UseGuards(LocalAuthenticationGuard)
   @Get()
   getAllReports(): Promise<Report[]> {
     return this.reportService.getAllReports();
