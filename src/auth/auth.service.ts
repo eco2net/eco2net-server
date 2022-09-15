@@ -4,7 +4,7 @@ import { UsersService } from '../users/users.service';
 import { PostgresErrorCode } from "../Constants";
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
-import User from 'src/entities/user.entity';
+import {User} from '../entities/user.entity';
 import TokenPayload from './interface/tokenPayload.interface';
 
 

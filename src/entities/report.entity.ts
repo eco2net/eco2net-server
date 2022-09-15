@@ -1,7 +1,7 @@
 import { Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn, Timestamp } from "typeorm";
 import { Attachements } from "./attachement.entity";
 import { Etatlieux } from "./etatlieux.entity";
-import User from "./user.entity";
+import {User} from "./user.entity";
 
 @Entity()
 export class Report {

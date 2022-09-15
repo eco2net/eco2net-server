@@ -1,5 +1,5 @@
 import { IsArray, IsBoolean, IsNotEmpty, IsNumber, IsString } from "class-validator";
-import User from "src/entities/user.entity";
+import {User} from "src/entities/user.entity";
 import { Etatlieux } from "../../entities/etatlieux.entity";
 
 export class ReportDto {

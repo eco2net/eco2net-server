@@ -2,7 +2,7 @@ import { Body, Controller, Delete, Get, HttpException, HttpStatus, Param, Post, 
 import JwtAuthenticationGuard from 'src/auth/guards/jwtAuthentification.guard';
 import { LocalAuthenticationGuard } from 'src/auth/guards/localAuthentication.guard';
 import { UpdateDateColumn } from 'typeorm';
-import User from '../entities/user.entity';
+import {User} from '../entities/user.entity';
 import { UserDto } from './dto/user.dto';
 import { UsersService } from './users.service';
 

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { MailerService } from '@nestjs-modules/mailer';
-import { PdfService } from 'src/pdf/pdf.service';
+import { PdfService } from '../pdf/pdf.service';
 @Injectable()
 export class MailService {
     constructor(private mailerService: MailerService,

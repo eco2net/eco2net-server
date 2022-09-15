@@ -37,8 +37,9 @@ import LogsMiddleware from "./config/logs/logs.middleware";
       username: process.env.PGUSR,
       password: process.env.PGPWD,
       database: process.env.PGDB,
+      keepConnectionAlive : true,
       entities: [
-        "dist/entities/**/*.js",
+         __dirname + '/**/*.entity.{ts,js}'
      ],
       synchronize: true,
     }),

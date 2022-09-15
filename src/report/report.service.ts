@@ -5,7 +5,7 @@ import { ReportDto } from './dto/report.dto';
 import { Attachements } from '../entities/attachement.entity';
 import { Etatlieux } from '../entities/etatlieux.entity';
 import { Report } from '../entities/report.entity';
-import User from 'src/entities/user.entity';
+import { User } from '../entities/user.entity';
 const { forEach } = require('p-iteration');
 
 @Injectable()
@@ -28,8 +28,12 @@ export class ReportService {
     }
 
     async getReportById(id: number): Promise<Report> {
-        let report = await this.reportRepository.findOne(id, { relations: ["listetatLieux", "attachements", "user"] });
-        return report
+        try {
+            let report = await this.reportRepository.findOne(id, { relations: ["listetatLieux", "attachements", "user"] });
+            return report
+        } catch( error) {
+            throw new HttpException("Oups ! le report demandé n'existe pas", HttpStatus.BAD_REQUEST)
+        }
     }
 
     async getReportsByUser(userId: number): Promise<Report[]> {
@@ -44,7 +48,7 @@ export class ReportService {
             return reports;
         } catch (error) {
             console.log(error);
-            throw new HttpException('Oups ! Une erreur interne est survenue', HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new HttpException('Oups ! Une erreur interne est survenue', HttpStatus.BAD_REQUEST);
         }
     }
 

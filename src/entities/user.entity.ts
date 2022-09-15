@@ -2,7 +2,12 @@ import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn } f
 import { Report } from './report.entity';
  
 @Entity()
-class User {
+export class User {
+
+  constructor() {
+
+  }
+  
   @PrimaryGeneratedColumn()
   public id?: number;
  
@@ -25,4 +30,4 @@ class User {
   createdAt: Date
 }
  
-export default User;
+// export default User;
