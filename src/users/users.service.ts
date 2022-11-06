@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import {User} from '../entities/user.entity';
 import { Repository } from 'typeorm';
 import { UserDto } from './dto/user.dto';
+import { PostgresErrorCode } from "../Constants";
 
 @Injectable()
 export class UsersService {
@@ -57,6 +58,9 @@ export class UsersService {
        return await this.usersRepository.remove(user);
       } catch (error) {
         console.log(error);
+        if (error?.driverError?.code === PostgresErrorCode.ForeighKeyViolation) {
+          throw new HttpException('Attention ! Cet utilisateur a des rapports, impossible de le supprimer.', HttpStatus.BAD_REQUEST);
+      }
         throw new HttpException(`Erreur lors de la suppression de l'utilisateur`, HttpStatus.INTERNAL_SERVER_ERROR);
       }
     }
