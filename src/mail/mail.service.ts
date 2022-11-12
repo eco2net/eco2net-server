@@ -19,23 +19,28 @@ export class MailService {
     async sendReportByMail(report) {
         let bufferPdf = await this.pdfService.generatePDF(report);
         console.log(bufferPdf);
-        this.mailerService.sendMail({
-            to: report.mailInfos.to,
-            subject: report.mailInfos.subject,
-            template: './sendReport', // `.hbs` extension is appended automatically
-            context: { // ✏️ filling curly brackets with content
-            },
-            attachments: [
-                {
-                    filename: 'Rapoort d\'intervention.pdf',
-                    contentType: 'application/pdf',
-                    content: bufferPdf
-                }
-            ]
-        });
+        try {
+            this.mailerService.sendMail({
+                to: report.mailInfos.to,
+                subject: report.mailInfos.subject,
+                template: './sendReport', // `.hbs` extension is appended automatically
+                context: { // ✏️ filling curly brackets with content
+                },
+                attachments: [
+                    {
+                        filename: 'Rapoort d\'intervention.pdf',
+                        contentType: 'application/pdf',
+                        content: bufferPdf
+                    }
+                ]
+            });
+        } catch(error) {
+            console.log(error)
+        };
+ 
     }
 
-    async addMailCustumers() {
+    async addMailCustomers() {
         const firstSheet = 0;
         let file = reader.readFile("/Users/adamebenadjal/Desktop/clienteco2net.xls");
         let data = [];
@@ -51,12 +56,21 @@ export class MailService {
                 let client = new Client(res.CL_CODE,
                     res.CL_NOM,
                     res.CL_EMAIL)
-                    console.log(client);
-                    
+                console.log(client);
+
                 let newClient = await this.clientRepository.create(client);
                 await this.clientRepository.save(newClient).catch((error) => console.log(error));
             }
         }
         return data
+    }
+
+    async getListOfCustomers() {
+        try {
+            var mailsCustomers = await this.clientRepository.find();
+        } catch (error) {
+            console.log(error)
+        }
+        return mailsCustomers
     }
 }

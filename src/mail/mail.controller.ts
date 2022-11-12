@@ -16,6 +16,11 @@ export class MailController {
 
     @Get("/emailFromExcel")
     addEmailFromExcel() {
-        return this.mailService.addMailCustumers();
+        return this.mailService.addMailCustomers();
+    }
+
+    @Get("/getMails")
+    getListOfMails() {
+        return this.mailService.getListOfCustomers();
     }
 }
