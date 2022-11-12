@@ -5,10 +5,16 @@ import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handleba
 import { join } from 'path';
 import { MailController } from './mail.controller';
 import { PdfModule } from '../pdf/pdf.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { Client } from 'src/entities/client.entity';
 
 @Module({
   providers: [MailService],
-  imports: [PdfModule,
+  // imports: [TypeOrmModule.forFeature([Report,Attachements,Etatlieux, User])],
+
+  imports: [
+    TypeOrmModule.forFeature([Client]),
+    PdfModule,
     MailerModule.forRoot({
       transport: {
         service: 'gmail',
