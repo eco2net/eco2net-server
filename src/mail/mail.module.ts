@@ -21,12 +21,12 @@ import { Client } from 'src/entities/client.entity';
         host: 'smtp.gmail.com',
         secure: false,
         auth: {
-          user: 'eco2net.pro@gmail.com',
-          pass: 'fyjiumybbqsmbalf',
+          user: 'eco2net.app@gmail.com',
+          pass: 'zqhuchskdcojooan',
         },
       },
       defaults: {
-        from: 'eco2net.pro@gmail.com',
+        from: 'eco2net.app@gmail.com',
       },
       template: {
         dir: join(__dirname, 'templates'),
